@@ -1,17 +1,14 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
-//@PreAuthorize("hasAuthority('admin')")
 @Controller
-//@RequestMapping("/admin")
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserServiceImp userService;
@@ -21,7 +18,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String getUserList(Model model) {
         model.addAttribute("users", userService.getListUsers());
         return "admin";
@@ -35,9 +32,9 @@ public class AdminController {
 
     @PostMapping("/addUser")
     public String createUser(@ModelAttribute("user") User user,
-                             @RequestParam(value = "rolesList") String[] roles) {
+                             @RequestParam(value = "rolesList", required = false) String[] roles) {
         userService.addUser(user, roles);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("deleteUser/{id}")
@@ -54,9 +51,9 @@ public class AdminController {
     }
 
     @PostMapping("/updateUser")
-    public String updateUser(User user) {
-        userService.updateUser(user);
-        return "redirect:/";
+    public String updateUser(User user, @RequestParam(value = "rolesList", required = false) String[] roles) {
+        userService.updateUser(user, roles);
+        return "redirect:/admin";
     }
 
 }

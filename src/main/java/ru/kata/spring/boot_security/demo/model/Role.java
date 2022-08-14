@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,9 +19,6 @@ public class Role implements GrantedAuthority {
     @Column(name = "role", unique = true)
     private String role;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-    private Set<User> users;
-
     public Role(long l, String role) {
         this.role = role;
     }
@@ -31,9 +27,13 @@ public class Role implements GrantedAuthority {
 
     }
 
+    public Role(String role) {
+        this.role = role;
+    }
+
     @Override
     public String getAuthority() {
-        return null;
+        return role;
     }
 
     @Override

@@ -12,25 +12,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//@Configuration
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     final SuccessUserHandler successUserHandler;
     final UserDetailsService userService;
-   // final PasswordEncoder passwordEncoder;
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, @Qualifier("userServiceImp") UserDetailsService userService, PasswordEncoder passwordEncoder) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
-       // this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
-    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public static PasswordEncoder bCryptPasswordEncoder() {
 
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 
     @Override
@@ -38,22 +36,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("admin")
-                .antMatchers("/user").hasAnyRole("user", "admin")
-                //.antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/login", "/").permitAll()
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") //прописываем доступ для юрл /user/**
+                .antMatchers("/admin/**").hasRole("ADMIN") //прописываем доступ для юрл /admin/**
+                .anyRequest().authenticated() // все запросы должны быть авторизованы и аутентифицированы
                 .and()
-                .formLogin()
+                .formLogin() // задаю форму для ввода логина-пароля, по дефолту это "/login"
                 .successHandler(successUserHandler)
-                .permitAll()
+                .permitAll() // доступно всем
                 .and()
-                .logout()
-                .permitAll();
+                .logout().permitAll(); //
     }
 
     @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
 }

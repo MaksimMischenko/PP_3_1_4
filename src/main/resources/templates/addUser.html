@@ -5,7 +5,7 @@
     <title>Users</title>
 </head>
 <body>
-<form action="#" th:action="@{/addUser}" th:object="${user}" method="post">
+<form action="#" th:action="@{/admin/addUser}" th:object="${user}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name">
     <br><br>
@@ -19,8 +19,8 @@
     <input type="number" th:field="*{phone}" id="phone" placeholder="Phone">
     <br><br>
     <select name="rolesList" id="roles" size="2" multiple>
-        <option th:value="admin" th:text="ADMIN"></option>
-        <option th:value="user" th:text="USER"></option>
+        <option th:value="ROLE_ADMIN" th:text="ADMIN"></option>
+        <option th:value="ROLE_USER" th:text="USER"></option>
     </select>
     <input type="submit" value="Save user">
 </form>
