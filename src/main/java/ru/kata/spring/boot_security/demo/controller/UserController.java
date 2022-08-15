@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping
-    public String user(ModelMap model, Principal principal) {
+    public String loadByUser(ModelMap model, Principal principal) {
         model.addAttribute("user", userServiceImp.loadUserByUsername(principal.getName()));
         return "user";
     }

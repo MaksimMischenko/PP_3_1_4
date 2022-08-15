@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UserDao userDao;
@@ -70,6 +69,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void addNewUser(User user) {
         userDao.addUser(user);
     }
