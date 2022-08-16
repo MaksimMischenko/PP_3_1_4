@@ -33,6 +33,12 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
+    public String getAuthority() {
+        return role;
+    }
+
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -43,11 +49,6 @@ public class Role implements GrantedAuthority {
     @Override
     public int hashCode() {
         return Objects.hash(id, role);
-    }
-
-    @Override
-    public String getAuthority() {
-        return role;
     }
 
     @Override
