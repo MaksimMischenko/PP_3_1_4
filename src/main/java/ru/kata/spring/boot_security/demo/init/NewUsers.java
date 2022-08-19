@@ -45,17 +45,16 @@ public class NewUsers {
         set2.add(user);
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             userService.addNewUser(new User("admin" + i, "surname" + i, "email" + i,
                     i, passwordEncoder.encode("1"), set));
         }
-        for (int i = 11; i < 16; i++) {
+        for (int i = 3; i < 4; i++) {
             userService.addNewUser(new User("user" + i, "surname" + i, "email" + i,
                     i, passwordEncoder.encode("1"), set1));
         }
 
-        userService.addNewUser(new User("userAdmin", "surname", "email",
-                1, passwordEncoder.encode("1"), set2));
+        userService.addNewUser(new User("userAdmin", "surname", "email", 1, passwordEncoder.encode("1"), set2));
     }
 
 }

@@ -47,7 +47,7 @@ public class AdminController {
     public String updateUserForm(@PathVariable("id") int id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
-        return "updateUser";
+        return "redirect:/admin";
     }
 
     @PostMapping("/updateUser")
