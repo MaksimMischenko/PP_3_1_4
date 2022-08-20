@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<meta charset="UTF-8">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Users</title>
+
+    <title>Spring Security Example</title>
 </head>
 <body>
+<!--шапка-->
 <div class="container" style="max-width: 100%">
-    <div class="row navbar navbar-dark bg-dark pd-0 pt-0">
+    <div class="row navbar navbar-dark bg-dark">
         <div class="col">
-<!--            <b class="text-white" th:utext="${user.getName()}"></b>-->
+<!--            <b class="text-white" th:utext="${user.getUsername()}"></b>-->
             <span class="text-white" th:utext="' with roles: '"></span>
-<!--            <span class="text-white" th:each="roles : ${user.getRoles()}" th:utext= "${roles.toString}+'   '"></span>-->
+<!--            <span class="text-white" th:each="roles : ${user.getRoles()}" th:utext="${roles.toString()}+'   '"></span>-->
         </div>
-        <div class="col-1">
-            <a class="nav-link active text-white-50" href="/logout">Logout</a>
-        </div>
+        <div class="col-1"><a class="nav-link active text-white-50" href="/logout">Logout</a></div>
     </div>
 </div>
-
+<!--левая колонка-->
 <div class="container" style="max-width: 100%">
     <div class="row" style="height: 120vh">
         <div class="col-2 pt-3 pl-0 pr-0">
@@ -29,6 +29,7 @@
                 <a class="nav-link" href="/user">User</a>
             </nav>
         </div>
+
         <div class="col-10 bg-light pt-3 pl-0 pr-0">
             <div class="container">
                 <h1>Admin panel</h1>
@@ -88,8 +89,8 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body offset-sm-4 text-center">
-                                                            <form class="row g-3" th:method="post"
-                                                                  th:action="@{/admin/updateUser}"
+                                                            <form class="row g-3" th:method="get"
+                                                                  th:action="@{/admin/updateUser/{id}(id=${user.id})}"
                                                                   th:object="${user}">
                                                                 <div class="row">
                                                                     <div class="form-group col-xs-12">

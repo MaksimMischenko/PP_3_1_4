@@ -44,14 +44,7 @@ public class AdminController {
     }
 
     @GetMapping("/updateUser/{id}")
-    public String updateUserForm(@PathVariable("id") int id, Model model) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/updateUser")
-    public String updateUser(User user, @RequestParam(value = "rolesList", required = false) String[] roles) {
+    public String updateUserForm(User user, @RequestParam(value = "rolesList", required = false) String[] roles) {
         userService.updateUser(user, roles);
         return "redirect:/admin";
     }
