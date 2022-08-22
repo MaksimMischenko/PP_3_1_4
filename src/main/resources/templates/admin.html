@@ -13,7 +13,7 @@
 <div class="container" style="max-width: 100%">
     <div class="row navbar navbar-dark bg-dark">
         <div class="col">
-            <b class="text-white" th:object="${user}" th:utext="${user.getUsername()}"></b>
+            <b class="text-white" th:object="${user}" th:utext="${user.getEmail()}"></b>
             <span class="text-white" th:utext="' with roles: '"></span>
             <span class="text-white" th:each="roles : ${user.getRoles()}" th:utext="${roles.toString()}+'   '"></span>
         </div>
