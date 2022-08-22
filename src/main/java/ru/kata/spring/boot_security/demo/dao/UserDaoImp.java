@@ -25,13 +25,19 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void addUser(User user) {
-        user.setPassword(passwordEncoder.encode("1"));
+        if (user.getPassword() == null) {
+            user.setPassword(passwordEncoder.encode("1"));
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         entityManager.persist(user);
     }
 
     @Override
     public void updateUser(User user) {
-        user.setPassword(passwordEncoder.encode("1"));
+        if (user.getPassword() == null) {
+            user.setPassword(passwordEncoder.encode("1"));
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         entityManager.merge(user);
     }
 
