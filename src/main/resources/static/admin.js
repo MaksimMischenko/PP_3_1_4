@@ -78,7 +78,7 @@ newUserForm.addEventListener('submit', (e) => {
         rolesList[i] = {id: id, role: $('#roles').val()[i]} ;
     }
     let newUser = {
-        name: name.value,
+        name: NameNewUser.value,
         surname: surname.value,
         email: email.value,
         phone: phone.value,
