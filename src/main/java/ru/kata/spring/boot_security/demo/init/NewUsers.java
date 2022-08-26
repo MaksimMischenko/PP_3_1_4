@@ -13,93 +13,48 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-
 public class NewUsers {
-
     private final UserService userService;
-
-
 
     private final RoleDao roleDao;
 
-
-
     private final PasswordEncoder passwordEncoder;
 
-
-
     @Autowired
-
     public NewUsers(UserService userService, RoleDao roleDao, PasswordEncoder passwordEncoder) {
-
         this.userService = userService;
-
         this.roleDao = roleDao;
-
         this.passwordEncoder = passwordEncoder;
-
     }
 
-
-
     @PostConstruct
-
     public void createUsers() {
-
         Set<Role> set = new HashSet<>();
-
         Set<Role> set1 = new HashSet<>();
-
         Set<Role> set2 = new HashSet<>();
 
-
-
         Role user = new Role("ROLE_USER");
-
         Role admin = new Role("ROLE_ADMIN");
 
-
-
         roleDao.save(user);
-
         roleDao.save(admin);
 
-
-
         set.add(admin);
-
         set1.add(user);
-
         set2.add(admin);
-
         set2.add(user);
 
-
-
-
-
         for (int i = 0; i < 2; i++) {
-
             userService.addNewUser(new User("admin" + i, "surname" + i, "email" + i,
-
-                    i,passwordEncoder.encode("1"), set));
-
+                    i, passwordEncoder.encode("1"), set));
         }
 
         for (int i = 3; i < 4; i++) {
-
             userService.addNewUser(new User("user" + i, "surname" + i, "email" + i,
-
                     i, passwordEncoder.encode("1"), set1));
-
         }
 
-
-
         userService.addNewUser(new User("userAdmin", "surname", "email", 1, passwordEncoder.encode("1"), set2));
-
     }
-
-
 
 }
