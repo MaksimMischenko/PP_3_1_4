@@ -14,8 +14,8 @@ import ru.kata.spring.boot_security.demo.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsServiceImpl userDetailsService;
-    private SuccessUserHandler successUserHandler;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final SuccessUserHandler successUserHandler;
 
     @Autowired
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, SuccessUserHandler successUserHandler) {
