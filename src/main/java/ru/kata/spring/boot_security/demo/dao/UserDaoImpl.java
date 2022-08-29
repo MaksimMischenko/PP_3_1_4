@@ -28,23 +28,29 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void save(User user) {
+    public void saveUser(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    public void update(User user) {
+    public void updateUser(User user) {
         entityManager.merge(user);
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteUser(int id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
     }
 
     @Override
-    public boolean exist(String email) {
+    public User getUserByUsername(String username) {
+        return entityManager.createQuery("select u from User u join fetch u.roles where u.email = :username",
+                User.class).setParameter("username", username).getSingleResult();
+    }
+
+    @Override
+    public boolean isUserExist(String email) {
         Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.email = : e");
         query.setParameter("e", email);
         if (((org.hibernate.query.Query) query).list().isEmpty()) {

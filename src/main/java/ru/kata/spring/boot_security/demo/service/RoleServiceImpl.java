@@ -21,15 +21,15 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.findByRole(role);
     }
 
-    @Transactional
-    @Override
-    public void save(Role role) {
-        roleDao.save(role);
-    }
-
     @Override
     public boolean exist(String role) {
         return roleDao.exist(role);
+    }
+
+    @Transactional
+    @Override
+    public void saveRole(Role role) {
+        roleDao.saveRole(role);
     }
 
 }

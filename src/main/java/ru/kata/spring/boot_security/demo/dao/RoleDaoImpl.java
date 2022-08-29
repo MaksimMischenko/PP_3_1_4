@@ -23,10 +23,10 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    @Transactional
-    public void save(Role role) {
+    public void saveRole(Role role) {
         entityManager.persist(role);
     }
+
 
     @Override
     public boolean exist(String role) {

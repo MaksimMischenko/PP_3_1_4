@@ -4,7 +4,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 public interface RoleService {
     Role findByRole (String role);
 
-    void save (Role role);
+    void saveRole (Role role);
 
     boolean exist(String role);
 

@@ -3,9 +3,9 @@ package ru.kata.spring.boot_security.demo.init;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -16,15 +16,12 @@ import java.util.Set;
 public class NewUsers {
     private final UserService userService;
 
-    private final RoleDao roleDao;
-
-    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Autowired
-    public NewUsers(UserService userService, RoleDao roleDao, PasswordEncoder passwordEncoder) {
+    public NewUsers(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        this.roleDao = roleDao;
-        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @PostConstruct
@@ -36,25 +33,21 @@ public class NewUsers {
         Role user = new Role("ROLE_USER");
         Role admin = new Role("ROLE_ADMIN");
 
-        roleDao.save(user);
-        roleDao.save(admin);
+        roleService.saveRole(user);
+        roleService.saveRole(admin);
 
         set.add(admin);
         set1.add(user);
-        set2.add(admin);
-        set2.add(user);
 
         for (int i = 0; i < 2; i++) {
-            userService.addNewUser(new User("admin" + i, "surname" + i, "email" + i,
-                    i, passwordEncoder.encode("1"), set));
+            userService.saveUser(new User("admin" + i, "surname" + i, "email" + i,
+                    i, "1", set));
         }
 
-        for (int i = 3; i < 4; i++) {
-            userService.addNewUser(new User("user" + i, "surname" + i, "email" + i,
-                    i, passwordEncoder.encode("1"), set1));
+        for (int i = 3; i < 5; i++) {
+            userService.saveUser(new User("user" + i, "surname" + i, "email" + i,
+                    i, "1", set1));
         }
-
-        userService.addNewUser(new User("userAdmin", "surname", "email", 1, passwordEncoder.encode("1"), set2));
     }
 
 }

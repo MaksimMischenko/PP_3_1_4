@@ -32,19 +32,19 @@ public class AdminRestController {
 
     @PostMapping()
     public ResponseEntity<User> addUser (@RequestBody User user) {
-        userService.save(user);
+        userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping()
     public ResponseEntity<User> update (@RequestBody User user) {
-        userService.update(user);
+        userService.updateUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Integer> delete (@PathVariable("id") int id) {
-        userService.delete(id);
+        userService.deleteUser(id);
         return new ResponseEntity<>(id,HttpStatus.NO_CONTENT);
     }
 

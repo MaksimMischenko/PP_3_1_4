@@ -1,6 +1,9 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +13,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
     private final RoleService roleService;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -28,42 +31,48 @@ public class UserServiceImpl implements UserService {
         return userDao.getUsers();
     }
 
-    @Transactional
-    @Override
-    public void save(User user) {
-        String pass = user.getPassword();
-        user.setPassword(passwordEncoder.encode(pass));
-        userDao.save(user);
-    }
-
     @Override
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
 
+    @Override
+    public boolean isUserExist(String email) {
+        return userDao.isUserExist(email);
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDao.getUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return user;
+    }
+
+
     @Transactional
     @Override
-    public void update(User user) {
+    public void saveUser(User user) {
         String pass = user.getPassword();
         user.setPassword(passwordEncoder.encode(pass));
-        userDao.update(user);
+        userDao.saveUser(user);
+    }
+
+
+    @Transactional
+    @Override
+    public void updateUser(User user) {
+        String pass = user.getPassword();
+        user.setPassword(passwordEncoder.encode(pass));
+        userDao.updateUser(user);
     }
 
     @Transactional
     @Override
-    public void delete(int id) {
-        userDao.delete(id);
-    }
-
-    @Override
-    public boolean exist(String email) {
-        return userDao.exist(email);
-    }
-
-    @Override
-    @Transactional
-    public void addNewUser(User user) {
-        userDao.save(user);
+    public void deleteUser(int id) {
+        userDao.deleteUser(id);
     }
 
 }
