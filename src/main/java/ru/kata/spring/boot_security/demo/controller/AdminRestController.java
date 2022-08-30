@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 public class AdminRestController {
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public AdminRestController(UserService userService) {
@@ -26,25 +27,25 @@ public class AdminRestController {
 
     @GetMapping("api/users/api/user")
     public ResponseEntity<User> getInfoAboutUser(Principal principal) {
-        return new ResponseEntity<>(userService.findByEmail(principal.getName()),HttpStatus.OK);
+        return new ResponseEntity<>(userService.findByEmail(principal.getName()), HttpStatus.OK);
     }
 
     @PostMapping("/api/users")
-    public ResponseEntity<User> addUser (@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @PutMapping("/api/users")
-    public ResponseEntity<User> updateUser (@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
         userService.updateUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/api/users/{id}")
-    public ResponseEntity<Integer> deleteUser (@PathVariable("id") int id) {
+    public ResponseEntity<Integer> deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(id,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/admin")

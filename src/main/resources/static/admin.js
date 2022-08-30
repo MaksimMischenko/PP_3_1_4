@@ -1,25 +1,24 @@
 //Nav Bar
 
 fetch('/api/users/user')
-    .then(res => { res.json().then(
-        user=>{
-            let navBar = ""
-            navBar += "<b class=\"text-white\">"+user.email+"</b>"
-            navBar += "<span class=\"text-white\"> with roles: </span>"
-            navBar += "<span class=\"text-white\">"
-            user.roles.forEach((role) => navBar += role.role.replace('ROLE_','')+' ')
-            navBar += "</span>"
-            document.getElementById("navBar").innerHTML = navBar
-        }
-    )
+    .then(res => {
+        res.json().then(
+            user => {
+                let navBar = ""
+                navBar += "<b class=\"text-white\">" + user.email + "</b>"
+                navBar += "<span class=\"text-white\"> with roles: </span>"
+                navBar += "<span class=\"text-white\">"
+                user.roles.forEach((role) => navBar += role.role.replace('ROLE_', '') + ' ')
+                navBar += "</span>"
+                document.getElementById("navBar").innerHTML = navBar
+            }
+        )
     })
-
-
 //Admin Panel
 
 const showTable = (users) => {
     let table = document.getElementById("tableAllUsers").innerHTML
-    users.forEach((user)=> {
+    users.forEach((user) => {
         table += `
                 <tr id="${user.id}">
                     <td>${user.id}</td>
@@ -28,7 +27,7 @@ const showTable = (users) => {
                     <td>${user.email}</td>
                     <td>${user.phone}</td>
                     <td>`
-        user.roles.forEach((role) => table += role.role.replace('ROLE_','')+" ")
+        user.roles.forEach((role) => table += role.role.replace('ROLE_', '') + " ")
         table += `
                     </td>
                     <td><button class="btn btn-info eBtn" data-toggle="modal">Edit</button></td>
@@ -40,17 +39,16 @@ const showTable = (users) => {
 }
 
 fetch('/api/users')
-    .then( response => response.json())
+    .then(response => response.json())
     .then(data => showTable(data))
 
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, e => {
-        if(e.target.closest(selector)){
+        if (e.target.closest(selector)) {
             handler(e)
         }
     })
 }
-
 //Add new user
 
 newUserLink.addEventListener('click', (e) => {
@@ -66,13 +64,13 @@ newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
     let id = 0
     let rolesList = [];
-    for(let i = 0; i < $('#roles').val().length; i++){
-        if ($('#roles').val()[i]==='ROLE_ADMIN') {
-            id=1
+    for (let i = 0; i < $('#roles').val().length; i++) {
+        if ($('#roles').val()[i] === 'ROLE_ADMIN') {
+            id = 1
         } else {
-            id=2
+            id = 2
         }
-        rolesList[i] = {id: id, role: $('#roles').val()[i]} ;
+        rolesList[i] = {id: id, role: $('#roles').val()[i]};
     }
     let newUser = {
         name: NameNewUser.value,
@@ -97,7 +95,6 @@ newUserForm.addEventListener('submit', (e) => {
         })
         .then(() => document.getElementById('userTable').click())
 })
-
 //Edit Modal
 
 on(document, 'click', '.eBtn', e => {
@@ -120,13 +117,13 @@ editModal.addEventListener('submit', (e) => {
     e.preventDefault()
     let id = 0
     let rolesListEdit = [];
-    for(let i = 0; i < $('#rolesEdit').val().length; i++){
-        if ($('#rolesEdit').val()[i]==='ROLE_ADMIN') {
-            id=1
+    for (let i = 0; i < $('#rolesEdit').val().length; i++) {
+        if ($('#rolesEdit').val()[i] === 'ROLE_ADMIN') {
+            id = 1
         } else {
-            id=2
+            id = 2
         }
-        rolesListEdit[i] = {id: id, role: $('#rolesEdit').val()[i]} ;
+        rolesListEdit[i] = {id: id, role: $('#rolesEdit').val()[i]};
     }
     let editUser = {
         id: idEdit.value,
@@ -140,7 +137,7 @@ editModal.addEventListener('submit', (e) => {
     fetch('/api/users', {
         method: 'PUT',
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(editUser)
     })
@@ -151,9 +148,8 @@ editModal.addEventListener('submit', (e) => {
             showTable(editUserInTable)
         })
         .then(() => document.getElementById(idEdit.value).remove())
-        .then(()=> document.getElementById('editModalClose').click())
+        .then(() => document.getElementById('editModalClose').click())
 })
-
 //Delete Modal
 
 on(document, 'click', '.dBtn', e => {
@@ -173,9 +169,9 @@ on(document, 'click', '.dBtn', e => {
 
 deleteModal.addEventListener('submit', (e) => {
     e.preventDefault()
-    fetch('/api/users/'+idDelete.value, {
+    fetch('/api/users/' + idDelete.value, {
         method: 'DELETE'
     })
         .then(() => document.getElementById(idDelete.value).remove())
-        .then(()=> document.getElementById('deleteModalClose').click())
+        .then(() => document.getElementById('deleteModalClose').click())
 })
