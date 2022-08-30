@@ -22,8 +22,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean exist(String role) {
-        return roleDao.exist(role);
+    public boolean isRoleExist(String role) {
+        return roleDao.isRoleExist(role);
     }
 
     @Transactional

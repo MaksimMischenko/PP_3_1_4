@@ -29,7 +29,7 @@ public class RoleDaoImpl implements RoleDao {
 
 
     @Override
-    public boolean exist(String role) {
+    public boolean isRoleExist(String role) {
         Query query = entityManager.createQuery("SELECT r FROM Role r WHERE r.role = : role");
         query.setParameter("role", role);
         if (((org.hibernate.query.Query) query).list().isEmpty()) {

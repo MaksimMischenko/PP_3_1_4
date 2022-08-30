@@ -1,6 +1,4 @@
-const url = 'http://localhost:8080/info'
-
-fetch(url)
+fetch('/info')
     .then(res => {
         res.json().then(
             user => {

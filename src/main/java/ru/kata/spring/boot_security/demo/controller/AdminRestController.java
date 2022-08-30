@@ -21,12 +21,12 @@ public class AdminRestController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<User>> allUsersRest() {
+    public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/user")
-    public ResponseEntity<User> navBar(Principal principal) {
+    public ResponseEntity<User> getInfoAboutUser(Principal principal) {
         return new ResponseEntity<>(userService.findByEmail(principal.getName()),HttpStatus.OK);
     }
 
@@ -37,15 +37,25 @@ public class AdminRestController {
     }
 
     @PutMapping()
-    public ResponseEntity<User> update (@RequestBody User user) {
+    public ResponseEntity<User> updateUser (@RequestBody User user) {
         userService.updateUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Integer> delete (@PathVariable("id") int id) {
+    public ResponseEntity<Integer> deleteUser (@PathVariable("id") int id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(id,HttpStatus.NO_CONTENT);
     }
+//
+//    @GetMapping("/admin/**")
+//    public String showAdmin() {
+//        return "admin";
+//    }
+//
+//    @GetMapping("/adminUser")
+//    public String showAdminUser() {
+//        return "adminUser";
+//    }
 
 }

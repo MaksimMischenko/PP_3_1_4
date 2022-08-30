@@ -6,6 +6,6 @@ public interface RoleDao {
 
     void saveRole (Role role);
 
-    boolean exist(String role);
+    boolean isRoleExist(String role);
 
 }

@@ -1,10 +1,6 @@
-const url1 ='http://localhost:8080/users/user'
-const url2 ='http://localhost:8080/users'
-const url3 ='http://localhost:8080/users/'
-
 //Nav Bar
 
-fetch(url1)
+fetch('/users/user')
     .then(res => { res.json().then(
         user=>{
             let navBar = ""
@@ -42,7 +38,7 @@ const showTable = (users) => {
     document.getElementById("tableAllUsers").innerHTML = table
 }
 
-fetch(url2)
+fetch('/users')
     .then( response => response.json())
     .then(data => showTable(data))
 
@@ -85,7 +81,7 @@ newUserForm.addEventListener('submit', (e) => {
         password: pass.value,
         roles: rolesList
     }
-    fetch(url2, {
+    fetch('/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -140,7 +136,7 @@ editModal.addEventListener('submit', (e) => {
         password: passEdit.value,
         roles: rolesListEdit
     }
-    fetch(url2, {
+    fetch('/users', {
         method: 'PUT',
         headers: {
             'Content-Type':'application/json'
@@ -176,7 +172,7 @@ on(document, 'click', '.dBtn', e => {
 
 deleteModal.addEventListener('submit', (e) => {
     e.preventDefault()
-    fetch(url3+idDelete.value, {
+    fetch('/users/'+idDelete.value, {
         method: 'DELETE'
     })
         .then(() => document.getElementById(idDelete.value).remove())
