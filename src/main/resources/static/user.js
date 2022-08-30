@@ -1,4 +1,4 @@
-fetch('/info')
+fetch('/api/user')
     .then(res => {
         res.json().then(
             user => {

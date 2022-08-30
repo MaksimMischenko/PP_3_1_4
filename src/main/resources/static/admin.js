@@ -1,6 +1,6 @@
 //Nav Bar
 
-fetch('/users/user')
+fetch('/api/users/user')
     .then(res => { res.json().then(
         user=>{
             let navBar = ""
@@ -13,6 +13,7 @@ fetch('/users/user')
         }
     )
     })
+
 
 //Admin Panel
 
@@ -38,7 +39,7 @@ const showTable = (users) => {
     document.getElementById("tableAllUsers").innerHTML = table
 }
 
-fetch('/users')
+fetch('/api/users')
     .then( response => response.json())
     .then(data => showTable(data))
 
@@ -81,7 +82,7 @@ newUserForm.addEventListener('submit', (e) => {
         password: pass.value,
         roles: rolesList
     }
-    fetch('/users', {
+    fetch('/api/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -136,7 +137,7 @@ editModal.addEventListener('submit', (e) => {
         password: passEdit.value,
         roles: rolesListEdit
     }
-    fetch('/users', {
+    fetch('/api/users', {
         method: 'PUT',
         headers: {
             'Content-Type':'application/json'
@@ -172,7 +173,7 @@ on(document, 'click', '.dBtn', e => {
 
 deleteModal.addEventListener('submit', (e) => {
     e.preventDefault()
-    fetch('/users/'+idDelete.value, {
+    fetch('/api/users/'+idDelete.value, {
         method: 'DELETE'
     })
         .then(() => document.getElementById(idDelete.value).remove())
