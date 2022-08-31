@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,28 +19,35 @@
         </div>
     </div>
 </div>
+
 <div class="container" style="max-width: 100%">
     <div class="row" style="height: 120vh">
         <div class="col-2 pt-3 pl-0 pr-0">
             <nav class="nav flex-column nav-pills">
-                <a class="nav-link active" href="/admin">Admin</a>
-                <a class="nav-link" href="/user">User</a>
+                <a class="list-group-item active" id="all_Users"
+                   href="#allUsers" data-toggle="tab">Admin</a>
+                <a class="list-group-item" id="admin_User_Table"
+                   href="#adminUserTable" data-toggle="tab">User</a>
             </nav>
         </div>
+
         <div class="col-10 bg-light pt-3 pl-0 pr-0">
             <div class="container">
-                <h1>Admin panel</h1>
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#allUsers" data-toggle="tab" id="userTable">Users table</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#addNewUser" data-toggle="tab" id="newUserLink">New user</a>
-                    </li>
-                </ul>
                 <div class="tab-content">
+
                     <!--All users-->
+
                     <div class="tab-pane fade show active" id="allUsers">
+                        <h1>Admin panel</h1>
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#allUsers" data-toggle="tab" id="userTable">Users
+                                    table</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#addNewUser" data-toggle="tab" id="newUserLink">New user</a>
+                            </li>
+                        </ul>
                         <div class="card">
                             <div class="bg-light p-2 pl-4 font-weight-bold"><h5>All users</h5></div>
                             <div class="card-block p-3">
@@ -62,7 +69,9 @@
                             </div>
                         </div>
                     </div>
+
                     <!--Add new user-->
+
                     <div class="tab-pane fade" id="addNewUser">
                         <div class="card">
                             <div class="card-block">
@@ -97,7 +106,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="roles" class="col-form-label">Roles</label>
-                                            <select class="form-control" name="rolesList" id="roles" size="2" multiple>
+                                            <select class="form-control" name="rolesList" id="roles" size="2"
+                                                    multiple>
                                                 <option value="ROLE_ADMIN">ADMIN</option>
                                                 <option value="ROLE_USER">USER</option>
                                             </select>
@@ -108,12 +118,40 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--                    InformationAboutUser-->
+
+                    <div class="tab-pane fade" id="adminUserTable">
+                        <div class="card">
+                            <div class="card-block">
+                                <h1>User information-page</h1>
+                                <div class="bg-light p-2 pl-4 font-weight-bold"><h5>About user</h5></div>
+                                <div class="card-block p-3">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Surname</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Role</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="userInfo"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- Modal Edit-->
+
 <div class="modal fade editModal" id="editModal" tabindex="-1" role="dialog"
      aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -125,7 +163,8 @@
                 </button>
             </div>
             <form>
-                <div class="modal-body text-center font-weight-bold" style="margin-left:100px; margin-right:100px;">
+                <div class="modal-body text-center font-weight-bold"
+                     style="margin-left:100px; margin-right:100px;">
                     <div class="form-group">
                         <label for="idEdit" class="col-form-label">ID</label>
                         <input type="text" class="form-control" id="idEdit" name="id" readonly="readonly">
@@ -140,7 +179,8 @@
                     </div>
                     <div class="form-group">
                         <label for="emailEdit" class="col-form-label">Email</label>
-                        <input type="text" class="form-control" id="emailEdit" name="email" max="100" min="0">
+                        <input type="text" class="form-control" id="emailEdit" name="email" max="100"
+                               min="0">
                     </div>
                     <div class="form-group">
                         <label for="phoneEdit" class="col-form-label">Phone</label>
@@ -159,7 +199,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="editModalClose">Close
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="editModalClose">Close
                     </button>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </div>
@@ -179,7 +220,8 @@
                 </button>
             </div>
             <form>
-                <div class="modal-body text-center font-weight-bold" style="margin-left:100px; margin-right:100px;">
+                <div class="modal-body text-center font-weight-bold"
+                     style="margin-left:100px; margin-right:100px;">
                     <div class="form-group">
                         <label for="idDelete" class="col-form-label">ID</label>
                         <input type="text" class="form-control" id="idDelete" readonly="readonly">
@@ -221,7 +263,6 @@
 </div>
 
 <script src="admin.js"></script>
-<script src="user.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

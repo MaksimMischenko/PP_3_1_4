@@ -1,6 +1,6 @@
 //Nav Bar
 
-fetch('/api/users/user')
+fetch('/api/user')
     .then(res => {
         res.json().then(
             user => {
@@ -11,9 +11,22 @@ fetch('/api/users/user')
                 user.roles.forEach((role) => navBar += role.role.replace('ROLE_', '') + ' ')
                 navBar += "</span>"
                 document.getElementById("navBar").innerHTML = navBar
+
+                let tableUser = ""
+                tableUser += "<tr>"
+                tableUser += "<td>" + user.id + "</td>"
+                tableUser += "<td>" + user.name + "</td>"
+                tableUser += "<td>" + user.surname + "</td>"
+                tableUser += "<td>" + user.email + "</td>"
+                tableUser += "<td>" + user.phone + "</td>"
+                tableUser += "<td>"
+                user.roles.forEach((role) => tableUser += role.role.replace('ROLE_', '') + " ")
+                tableUser += "</td>"
+                document.getElementById("userInfo").innerHTML = tableUser
             }
         )
     })
+
 //Admin Panel
 
 const showTable = (users) => {
@@ -49,6 +62,7 @@ const on = (element, event, selector, handler) => {
         }
     })
 }
+
 //Add new user
 
 newUserLink.addEventListener('click', (e) => {
@@ -66,9 +80,9 @@ newUserForm.addEventListener('submit', (e) => {
     let rolesList = [];
     for (let i = 0; i < $('#roles').val().length; i++) {
         if ($('#roles').val()[i] === 'ROLE_ADMIN') {
-            id = 1
-        } else {
             id = 2
+        } else {
+            id = 1
         }
         rolesList[i] = {id: id, role: $('#roles').val()[i]};
     }
@@ -95,6 +109,7 @@ newUserForm.addEventListener('submit', (e) => {
         })
         .then(() => document.getElementById('userTable').click())
 })
+
 //Edit Modal
 
 on(document, 'click', '.eBtn', e => {
@@ -150,6 +165,7 @@ editModal.addEventListener('submit', (e) => {
         .then(() => document.getElementById(idEdit.value).remove())
         .then(() => document.getElementById('editModalClose').click())
 })
+
 //Delete Modal
 
 on(document, 'click', '.dBtn', e => {
@@ -175,3 +191,4 @@ deleteModal.addEventListener('submit', (e) => {
         .then(() => document.getElementById(idDelete.value).remove())
         .then(() => document.getElementById('deleteModalClose').click())
 })
+
